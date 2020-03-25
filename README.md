@@ -20,6 +20,10 @@
 
 ## Ch10 Unsupervised Learning
 
+### RESOURCES:
+
+[Links and such](https://www.r-bloggers.com/in-depth-introduction-to-machine-learning-in-15-hours-of-expert-videos/)
+
 #### NOTE FOR REGEX:
 
 Removes everything after paren
