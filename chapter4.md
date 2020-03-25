@@ -13,6 +13,8 @@
 
 ### 4.5 Discriminant Analysis 
 
+* P(y=1|x) from logistic regression is not linear because it involves both an exponential function of x and a ratio
+
 ### 4.6 Gaussian Discriminant Analysis - One Variable 
 
 ### 4.7 Gaussian Discriminant Analysis - Many Variables 
