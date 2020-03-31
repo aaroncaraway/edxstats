@@ -21,6 +21,27 @@
 
 ### 4.8 Quadratic Discriminant Analysis and Naive Bayes 
 
+* Two forms of CLASSIFICATION:
+1. Regression
+2. Linear Discriminant Analysis
+
+* BOTH give linear logistic models
+* Difference is in how parameters are estimated
+
+#### Logistic Regression
+* Uses conditional liklihood based on probability of Y given X Pr(Y|X)
+* ^^^ is known as *Discriminative Learning*
+* Only using distribution of Y
+* NOTE: Can also fit quadratic boundaries
+
+#### LDA 
+* uses the full likelihood based on Pr(X,Y)
+* ^^^ known as *Generative Learning*
+* Using the distribution of Xs and Ys
+
+#### QDA
+* QDA is a more flexible model than LDA
+
 ### 4.R Classification in R 
 
 
