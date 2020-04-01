@@ -1,0 +1,75 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+So we're going to use the direction as a response and
+see if we can predict it as a binary response using logistic
+regression.
+
+```{r}
+require(ISLR)
+names(Smarket)
+summary(Smarket)
+```
+
+```{r}
+?Smarket
+pairs(Smarket,col=Smarket$Direction)
+```
+
+```{r}
+glm.fit=glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,
+            data=Smarket, family=binomial)
+
+summary(glm.fit)
+```
+
+```{r}
+# This is making predictions on our training data
+glm.probs=predict(glm.fit, type="response")
+glm.probs[1:5]
+
+# if else, quick assignment
+glm.pred=ifelse(glm.probs>0.5, "Up", "Down")
+attach(Smarket)
+table(glm.pred, Direction)
+```
+
+```{r}
+mean(glm.pred==Direction)
+```
+
+## MAKE TRAINING AND TEST SET
+
+```{r}
+
+train = Year<2005
+glm.fit=glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume, 
+            data=Smarket, family=binomial, subset=train)
+glm.probs=predict(glm.fit, newdata=Smarket[!train,], type="response")
+glm.pred=ifelse(glm.probs > 0.5, "Up", "Down")
+Direction.2005=Smarket$Direction[!train]
+table(glm.pred, Direction.2005)
+mean(glm.pred==Direction.2005)
+```
+
+## OH NO!! It got WORSE!!
+
+### Let's try a smaller model
+
+```{r}
+glm.fit=glm(Direction~Lag1+Lag2,
+            data=Smarket, family=binomial, subset=train)
+glm.probs=predict(glm.fit, newdata=Smarket[!train,], type="response")
+glm.pred=ifelse(glm.probs > 0.5, "Up", "Down")
+Direction.2005=Smarket$Direction[!train]
+table(glm.pred, Direction.2005)
+mean(glm.pred==Direction.2005)
+```
+
+### Much better!
+
+FIN.
