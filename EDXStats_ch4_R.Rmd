@@ -72,4 +72,69 @@ mean(glm.pred==Direction.2005)
 
 ### Much better!
 
+# Linear Discriminant Analysis
+
+So the first thing we do, we're going to use the stock
+market data here, and the response is going to be the
+direction that the market took on a particular day.
+And we're going to use the returns on the previous two
+days to try and predict the direction on
+this particular day.
+
+
+```{r}
+require(ISLR)
+require(MASS)
+lda.fit=lda(Direction~Lag1+Lag2,data=Smarket, subset=Year<2005)
+lda.fit
+plot(lda.fit)
+
+Smarket.2005=subset(Smarket,Year==2005)
+lda.pred=predict(lda.fit, Smarket.2005)
+# lda.pred[1:5,]
+
+class(lda.pred)
+```
+
+So the prior probabilities are just the proportions of ups
+and downs in the data set.
+It's roughly 50%, which says something
+about the market, right?
+It's kind of a random walk.
+Half the time it goes up, half the time it goes down.
+It summarizes the group means for the two groups, for the
+downs and the ups.
+It looks like there may be a slight difference
+in these two groups.
+The means seem to be separated a little bit.
+And then it gives the LDA coefficients.
+So if you remember the LDA function fits a linear
+function for separating the two groups.
+And so, it's got two coefficients.
+
+```{r}
+data.frame(lda.pred)[1:5,]
+table(lda.pred$class,Smarket.2005$Direction)
+mean(lda.pred$class==Smarket.2005$Direction)
+```
+
+
+
+We'll do a table of that, and we get the little confusion
+matrix, which tells us which downs were classified as down,
+which downs are classified as up, and so on.
+And it's the off-diagonal elements of those that are the
+mistakes, and the diagonal elements which are the correct
+classifications.
+And so, one simple command tells us our current
+classification rate, which is we've got a conditional here,
+which is the predicted class is equal to the true class.
+So that'll be true if they're equal, and it'll be false if
+they're not.
+And since trues and falses can be coerces to be zeros and
+ones, we can just take the mean of that, and it'll give
+us our current classification rate, which in this case is
+about 0.56.
+
+
 FIN.
