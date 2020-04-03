@@ -136,5 +136,36 @@ ones, we can just take the mean of that, and it'll give
 us our current classification rate, which in this case is
 about 0.56.
 
+## K-NEAREST NEIGHBORS!!
+
+k equals 1 says we want one nearest neighbor
+classification.
+And, again, just to remind you, that means what the
+algorithm does is, it says to classify a new observation,
+you go into the training set in the x space, the feature
+space, and you look for the training observation that's
+closest to your test point in Euclidean distance and you
+classify to its class.
+
+```{r}
+library(class)
+?knn
+attach(Smarket)
+Xlag=cbind(Lag1,Lag2)
+train=Year<2005
+knn.pred=knn(Xlag[train,], Xlag[!train,], Direction[train], k=1)
+table(knn.pred, Direction[!train])
+mean(knn.pred==Direction[!train])
+```
+
+
+And it's exactly 0.5.
+So it was useless.
+One nearest neighbor did no better than flipping a coin.
+So, what to do next?
+Well, one could proceed further and try nearest
+neighbors with multiple values of k.
+
+
 
 FIN.
