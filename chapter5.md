@@ -91,6 +91,43 @@ Completely removing the bootstrap resampling noise is usually not worth incurrin
 
 ### 5.5 More on the Bootstrap (1 Question)
 
+But in this situation, that's not a reasonable assumption.
+Because the observations are not independent.
+So in general, when you set up the bootstrap and arrange for
+the sampling, you must figure out what parts of the data are
+independent.
+
+So one thing people do in a time series--
+because the observations are not independent-- to correlate
+across time is to use what's called the block bootstrap.
+The block bootstrap divides the data up into blocks.
+And between blocks, one assumes that things are
+independent.
+
+So it's even worse in the sense that it's going to be
+even more biased.
+Well, how do you fix this problem?
+You can fix it by, when you train on the bootstrap sample
+and then predict the training sample, just recording the
+predictions for the points that did not occur in the
+bootstrap sample-- in other words, the points that are
+actually novel points.
+
+But then, this gets complicated.
+And in the end, it's really not worth it.
+If you push this idea to its conclusion, you can get
+something which is about as good as cross-validation.
+But it's much more complicated.
+So our view is for this particular problem,
+cross-validation is easier, and better, and
+the thing we recommend.
+
+QUESTION:
+If we have n data points, what is the probability that a given data point does not appear in a bootstrap sample?
+
+ANSWER:
+To construct a bootstrap sample, we repeatedly draw a single data point from a sample of size n, n times. Any given data point has a 1-1/n chance of not being selected in each draw. Hence, the chance of not being selected in any of the n draws is (1-1/n)^n
+
 ### 5.R Resampling in R (4 Questions)
 
 ### Chapter 5 Quiz (2 Questions)

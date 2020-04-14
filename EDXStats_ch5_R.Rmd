@@ -1,0 +1,32 @@
+---
+title: "EDXStats_ch5_R"
+output: html_document
+---
+
+# LEAVE-ONE-OUT CROSS VALIDATION (LOOCV)
+
+glm = generalized linear models
+
+```{r}
+require(ISLR)
+require(boot)
+```
+
+## USE SUMMARY TO FIND STD.ERROR ETC.
+
+```{r}
+load("Documents/EDXStats/5.R.RData")
+glm.fit=glm(y~X1+X2, data=Xy)
+
+summary(glm.fit)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
