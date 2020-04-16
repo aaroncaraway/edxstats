@@ -41,6 +41,29 @@ for(d in degree){
 
 lines(degree, cv.error10, type="b",col="red")
 
+
+#################################
+## BOOTSTRAPPING
+## Minimum Risk Investment 5.2
+#################################
+
+
+alpha=function(x,y){
+  vx=var(x)
+  vy=var(y)
+  cxy=cov(x,y)
+  (vy-cxy)/(vx+vy-2*cxy)
+}
+
+
+
+
+
+
+
+
+
+
 ## QUIZ QUESTIONS
 # B1 is first predictor (not coef)
 load("Documents/EDXStats/5.R.RData")

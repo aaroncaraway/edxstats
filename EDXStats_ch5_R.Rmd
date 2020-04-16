@@ -21,12 +21,56 @@ glm.fit=glm(y~X1+X2, data=Xy)
 summary(glm.fit)
 ```
 
-## Including Plots
+## BOOTSTRAPPING
 
-You can also embed plots, for example:
+So the bootstrap gives us a really easy way of doing
+statistics when the theory is very hard.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+And to illustrate it we'll use the example we used in the
+book in section 5.2 where we have a particularly non-linear
+formula for **picking an optimal combination of two
+investments.**
+
+RISK for investment X is VAR(X)
+RISK for investment Y is VAR(Y)
+
+```{r}
+alpha=function(x,y){
+  vx=var(x)
+  vy=var(y)
+  cxy=cov(x,y)
+  (vy-cxy)/(vx+vy-2*cxy)
+}
+alpha(Portfolio$X,Portfolio$Y)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+OK, so in order to use the bootstrap function we need to
+make a little wrapper that allows a bootstrap to work.
+And this is this function we'll call alpha.fn.
+And what it does is it takes a data frame and an index, which
+indexes rows of the data frame, and then computes your
+statistic--
+in this case alpha index, for which it wants to compute the
+variance in this case, the standard error.
+
+```{r}
+alpha.fn=function(data, index){
+  # WITH function -- using this dataframe, perform this function
+  with(data[index,],alpha(X,Y))
+}
+
+alpha.fn(Portfolio,1:100)
+```
+
+NOW we run the bootstrap
+
+```{r}
+set.seed(1)
+```
+
+
+
+
+
+FIN.
