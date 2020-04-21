@@ -1,0 +1,70 @@
+---
+title: "EDXStats_ch5_LAB"
+output: html_document
+---
+
+# 5.3 LAB: Cross-Validation and the Booststrap
+
+## 5.3.1 The Validation Set Approach
+
+1. load library
+2. set seed (so we can replicate)
+3. split data into test and train
+
+```{r}
+library(ISLR)
+set.seed(1)
+train=sample(392,196) 
+```
+
+4. use `subset` option in `lm()` to fit a linear regression with only training set
+
+```{r}
+lm.fit=lm(mpg~horsepower, data=Auto, subset=train)
+```
+
+5. use `predict` to estimate response for all 392 observations
+6. use `mean` to calculate the MSE of the 196 observations in the validation set
+NOTE: `-train` selects only the observations that are not in the training set
+
+```{r}
+attach(Auto)
+mean((mpg-predict(lm.fit,Auto))[-train]^2)
+```
+
+7. Quadratic and Cubic regressions
+
+```{r}
+lm.fit2=lm(mpg~poly(horsepower,2), data=Auto, subset=train)
+mean((mpg-predict(lm.fit2,Auto))[-train]^2)
+```
+
+```{r}
+lm.fit3=lm(mpg~poly(horsepower,3), data=Auto, subset=train)
+mean((mpg-predict(lm.fit3,Auto))[-train]^2)
+```
+
+8. do it all again with a different seed
+
+```{r}
+set.seed(2)
+train=sample(392,196) 
+lm.fit=lm(mpg~horsepower, data=Auto, subset=train)
+mean((mpg-predict(lm.fit,Auto))[-train]^2)
+```
+
+```{r}
+lm.fit2=lm(mpg~poly(horsepower,2), data=Auto, subset=train)
+mean((mpg-predict(lm.fit2,Auto))[-train]^2)
+```
+
+```{r}
+lm.fit3=lm(mpg~poly(horsepower,3), data=Auto, subset=train)
+mean((mpg-predict(lm.fit3,Auto))[-train]^2)
+```
+### RESULTS:
+
+A model that predicts `mpg` usinga quadratic function of horsepower performs better than a model that involves only a linear function of horsepower. Thereis little evidence in favor of a model that uses a cubic function of horsepower.
+
+
+FIN.

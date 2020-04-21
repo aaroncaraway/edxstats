@@ -81,6 +81,19 @@ Very handy way of getting very good reliable estimates of
 standard error for nasty statistics.
 
 
+## QUIZ QUESTIONS:
+
+```{r}
+load("Documents/EDXStats/5.R.RData")
+alpha.fn(Portfolio,1:100)
+set.seed(1)
+alpha.fn (Portfolio,sample(1:100,100,replace=TRUE))
+
+# 1000 bootstraps
+boot.out=boot(Portfolio, alpha.fn,R=1000)
+boot.out
+plot(boot.out)
+```
 
 
 FIN.
