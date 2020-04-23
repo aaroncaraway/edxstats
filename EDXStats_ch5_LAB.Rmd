@@ -67,4 +67,21 @@ mean((mpg-predict(lm.fit3,Auto))[-train]^2)
 A model that predicts `mpg` usinga quadratic function of horsepower performs better than a model that involves only a linear function of horsepower. Thereis little evidence in favor of a model that uses a cubic function of horsepower.
 
 
+# 5.3.2 Leave-One-Out Cross Validation
+
+NOTE: `glm()` and `lm()` perform same unless we pass a family argument to `glm`
+HOWEVER: We can only use `cv.` with `glm`
+
+```{r}
+library(boot)
+# vector for storing our loop results
+cv.error=rep(0,5)
+for(i in 1:5){
+  glm.fit=glm(mpg~poly(horsepower, i), data=Auto)
+  cv.error[i] = cv.glm(Auto, glm.fit)$delta[1]
+}
+cv.error
+```
+
+
 FIN.
